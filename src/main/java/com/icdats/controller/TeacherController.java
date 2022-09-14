@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 @SuppressWarnings("all")
 @Controller
+@RequestMapping("/teacher")
 public class TeacherController {
     @Autowired
     private TeacherService teacherService;

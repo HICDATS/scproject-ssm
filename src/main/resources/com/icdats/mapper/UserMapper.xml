@@ -13,7 +13,7 @@
     </insert>
 
     <select id="getUserById" resultType="User">
-        select * from t_useer_login where id = #{id}
+        select * from t_user_login where id = #{id}
     </select>
 
     <update id="changePwdById">

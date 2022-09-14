@@ -90,12 +90,13 @@ public class CourseController {
     @ResponseBody
     @RequestMapping("/addCourse")
     //为当前学生添加课程信息
-    public String addCourse(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+    public Map<String,Boolean> addCourse(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         //获取需要添加的课程号
         Integer cid = Integer.parseInt(request.getParameter("cid"));
         //通过课程号获取课程
         Course courseByCid = courseService.getCourseByCid(cid);
         //将该课程的上课时间与已选课程的上课时间进行比较，若相同则返回添加失败
+        HashMap<String, Boolean> result = new HashMap<>();
         String[] timeArr = courseByCid.getTimeArr();
         Student currStudent = (Student) session.getAttribute("currStudent");
         Map<Course, AllScore> coursesMap = currStudent.getCourses();
@@ -105,7 +106,8 @@ public class CourseController {
                 String[] myTimeArr = course.getTimeArr();
                 List<String> myTimeList = Arrays.asList(myTimeArr);
                 if(myTimeList.contains(time)){
-                    return "json:{\"no\":true}";
+                    result.put("no",true);
+                    return result;
                 } else {
                     continue;
                 }
@@ -119,7 +121,7 @@ public class CourseController {
         session.setAttribute("currStudent", student);
         //设置学生课程已改变的标记，便于刷新展示数据
         session.setAttribute("updatedForStudentCourses", true);
-        return "";
+        return result;
     }
 
     @ResponseBody
@@ -192,16 +194,19 @@ public class CourseController {
     @ResponseBody
     @RequestMapping("/applyCourse")
     //老师提交课程申请信息
-    public Map<String,Boolean> applyCourse(String cname,String time,String address,Integer cap,HttpSession session){
+    public Map<String,Boolean> applyCourse(Integer tid,String cname,String time,String address,Integer cap,HttpSession session){
+        Integer tid2 = tid;
         Teacher currTeacher = (Teacher) session.getAttribute("currTeacher");
-        Integer tid = currTeacher.getTid();
+        if(currTeacher != null){
+            tid2 = currTeacher.getTid();
+        }
         time = time.substring(0,time.length()-1);
         HashMap<String, Boolean> result = new HashMap<>();
         if(courseService.getCourseByAddressAndTime(address,time).size()!=0){
             result.put("exist",true);
             return result;
         }
-        courseService.addNeedAuditCourse(cname,time,address,cap,tid);
+        courseService.addNeedAuditCourse(cname,time,address,cap,tid2);
         result.put("exist",false);
         return result;
     }

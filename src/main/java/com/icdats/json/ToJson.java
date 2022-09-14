@@ -1,12 +1,13 @@
 package com.icdats.json;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ToJson {
     private Integer code = 0;
     private String msg = "";
     private Integer count = 0;
-    private Object data;
+    private Object data = new ArrayList();
 
     public ToJson() {}
 
