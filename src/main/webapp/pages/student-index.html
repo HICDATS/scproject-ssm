@@ -20,16 +20,16 @@
 				</div>
 				<ul class="layui-nav layui-nav-tree" lay-filter="leftNav">
 					<li class="layui-nav-item">
-						<a href="javascript:;" data-url="pages/choose-course.html"><i class="iconfont">&#xe60c;</i>自主选课</a>
+						<a href="javascript:;" data-url="choose-course.html"><i class="iconfont">&#xe60c;</i>自主选课</a>
 					</li>
 					<li class="layui-nav-item">
-						<a href="javascript:;" data-url="pages/course-timetable.html"><i class="iconfont">&#xe60a;</i>课表查询</a>
+						<a href="javascript:;" data-url="course-timetable.html"><i class="iconfont">&#xe60a;</i>课表查询</a>
 					</li>
 				    <li class="layui-nav-item">
-				        <a href="javascript:;" data-url="pages/grade.html"><i class="iconfont">&#xe60d;</i>我的成绩</a>
+				        <a href="javascript:;" data-url="grade.html"><i class="iconfont">&#xe60d;</i>我的成绩</a>
 				    </li>
 				    <li class="layui-nav-item">
-				    	<a href="javascript:;" data-url="page.do?operate=page&page=st-info"><i class="iconfont">&#xe60b;</i>个人资料</a>
+				    	<a href="javascript:;" data-url="/scproject/page.do/st-info"><i class="iconfont">&#xe60b;</i>个人资料</a>
 				    </li>
 				    <li class="layui-nav-item">
 				  		<a id="loginout" ><i class="iconfont">&#x1006;</i>退出登录</a>
@@ -55,7 +55,7 @@
 					  <div class="layui-tab-content">
 					    <div class="layui-tab-item layui-show" style="background: #f5f5f5;">
 					    	<!--1-->
-					    	<iframe src="pages/choose-course.html" id="iframInfo" width="100%" height="100%" name="iframe" scrolling="auto" class="iframe" framborder="0"></iframe>
+					    	<iframe src="choose-course.html" id="iframInfo" width="100%" height="100%" name="iframe" scrolling="auto" class="iframe" framborder="0"></iframe>
 					    	<!--1end-->
 					    </div>
 					  </div>
@@ -78,7 +78,7 @@
 					shadeClose: true,
 					shade: 0.8,
 					area: ['60%', '70%'],
-					content: 'pages/tuike.html', //iframe的url
+					content: 'tuike.html', //iframe的url
 					end: function (){
 						window.location.reload();
 					}
@@ -104,7 +104,7 @@
 					content: '是否确认退出',
 					yes: function (index, layero) {
 						//点击确认后的操作
-						self.location="http://localhost:8080/scproject/pages/login.html";
+						self.location="/scproject/page/login";
 						layer.close(index);},
 					btn2: function (index, layero) {
 						// 取消后的操作

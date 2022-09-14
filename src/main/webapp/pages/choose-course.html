@@ -47,7 +47,7 @@
         table.render({
             elem: '#test'
             ,height: 500
-            ,url: 'http://localhost:8080/scproject/course.do?operate=getCourseForStudent' //数据接口
+            ,url: '/scproject/course/getCourseForStudent' //数据接口
             ,page: true //开启分页
             ,limit: 10
             ,limits: [5, 10, 20, 50, 100],
@@ -73,7 +73,8 @@
                 };
             }
             ,toolbar:'#toolbarDemo'
-            ,cols: [[ //表头
+            ,cols: [
+                [ //表头
                 {field: 'cid', title: '课程号', width:100, sort: true, fixed: 'left'}
                 ,{field: 'cname', title: '课程名', width:200, fixed: 'left'}
                 ,{field: 'time', title: '上课时间', sort: true, fixed: 'left'}
@@ -82,7 +83,8 @@
                 ,{field: 'cap', title: '容量', sort: true, fixed: 'left'}
                 ,{field: 'snum', title: '已选人数',sort: true, fixed: 'left'}
                 ,{title:'操作', toolbar: '#barDemo', width:100, fixed: 'left'}
-            ]]
+                ]
+            ]
             ,done: function() {
                 table.on('tool(test)', function(obj){ // 双击 toolDouble
                     var data = obj.data;
@@ -104,9 +106,8 @@
                                 //向courseController放送请求
                                 axios({
                                     method:"POST",
-                                    url:"course.do",
+                                    url:"/scproject/course/addCourse",
                                     params:{
-                                        operate:'addCourse',
                                         cid:obj.data.cid
                                     }
                                 })
@@ -151,9 +152,8 @@
                 this.elem.val(obj.title);
                 axios({
                     method:"POST",
-                    url:"course.do",
+                    url:"/scproject/course/getCourseBySelect",
                     params:{
-                        operate:'getCourseBySelect',
                         value:zhi.value,
                         selectName:this.elem.val()
                     }

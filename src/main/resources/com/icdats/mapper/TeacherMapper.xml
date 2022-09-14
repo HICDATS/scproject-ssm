@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.icdats.mapper.TeacherMapper">
+
+    <select id="getTeacher" resultType="Teacher">
+        select * from t_tc_detail where tid = #{tid};
+    </select>
+
+    <select id="getTeacherName" resultType="String">
+        select name from t_tc_detail where tid = #{tid}
+    </select>
+
+    <select id="getTeacherDetailByTid" resultType="Teacher">
+        select tid,name,sex,college,jobTitle,acount,pwd from t_tc_detail LEFT JOIN t_user_login on t_tc_detail.tid = t_user_login.id where tid = #{tid};
+    </select>
+
+    <select id="getTeacherListByMoHuName" resultType="Teacher">
+        select tid,name,sex,college,jobTitle,acount,pwd from t_tc_detail LEFT JOIN t_user_login on t_tc_detail.tid = t_user_login.id where name like "%"#{moHuName}"%";
+    </select>
+
+    <select id="getTeacherListByMoHuCollege" resultType="Teacher">
+        select tid,name,sex,college,jobTitle,acount,pwd from t_tc_detail LEFT JOIN t_user_login on t_tc_detail.tid = t_user_login.id where college like "%"#{moHuCollege}"%";
+    </select>
+
+    <delete id="deleteTeacherByTid">
+        delete from t_tc_detail where tid = #{tid};
+    </delete>
+
+    <update id="updateTeacherByTid">
+        update t_tc_detail set name = #{name} , sex = #{sex} , college = #{college} , jobTitle = #{jobTitle}  where tid = #{tid};
+    </update>
+
+    <insert id="addTeacher">
+        insert into t_tc_detail values(#{tid},#{name},#{sex},#{college},#{jobTitle});
+    </insert>
+
+</mapper>

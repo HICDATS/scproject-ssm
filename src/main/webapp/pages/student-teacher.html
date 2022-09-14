@@ -13,7 +13,6 @@
 <div class="main-layout" id='main-layout'>
 
     <!--右侧内容-->
-
         <!--主体内容-->
         <div class="main-layout-body">
             <!--tab 切换-->
@@ -57,28 +56,6 @@
             }
         }
     })
-    /* 	$("#loginOut").on('click',loginOut); */
-    function loginOut(){
-        $.ajax({
-            //几个参数需要注意一下
-            type: "POST",//方法类型
-            dataType: "json",//预期服务器返回的数据类型
-            url: "/user/studentloginOut",//url
-            data: {},
-            success: function (result) {
-                if (result.code == "0") {
-                    location.href="/login.html";
-                }else{
-                    alert(result.msg);
-                }
-            },
-            error : function() {
-                layer.msg('服务器错误', {
-                    icon: 5
-                });
-            }
-        });
-    }
 </script>
 <script src="../static/layui/layui.js" type="text/javascript" charset="utf-8"></script>
 <script src="../static/js/common.js" type="text/javascript" charset="utf-8"></script>

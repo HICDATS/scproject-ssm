@@ -71,8 +71,7 @@
     </div>
   </div>
 </form>
-<!-- 注意：项目正式环境请勿引用该地址 -->
-<!--<script src="//unpkg.com/layui@2.7.6/dist/layui.js"></script>-->
+
 <script>
   layui.use(['form', 'util', 'layer','dropdown','table'], function(){
     var form = layui.form;
@@ -92,10 +91,9 @@
         ,'密码必须6到12位，且不能出现空格'
       ]
     });
-    //初演示 - 绑定输入框
 
     form.on('submit(demo1)', function(data){
-      $.post("http://localhost:8080/scproject/student.do?operate=updateStudent", data.field,function (value){
+      $.post("/scproject/student/updateStudent", data.field,function (value){
           layer.alert('修改成功', {icon: 1,title:" "});
       },"json");
       var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引

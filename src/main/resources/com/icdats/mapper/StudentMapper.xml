@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.icdats.mapper.StudentMapper">
+    <select id="getStudentBySid" resultType="Student">
+        select * from t_st_detail where sid = #{sid}
+    </select>
+
+
+    <select id="getSidByMoHuName" resultType="Student">
+        select sid from t_st_detail where name like "%"#{moHuName}"%"
+    </select>
+
+    <select id="getStudentDetailBySid" resultType="Student">
+        select sid,name,sex,major,grade,sclass,acount,pwd from t_st_detail LEFT JOIN t_user_login on t_st_detail.sid = t_user_login.id where sid = #{sid};
+    </select>
+
+    <select id="getStudentListByMoHuName" resultType="Student">
+        select sid,name,sex,major,grade,sclass,acount,pwd from t_st_detail LEFT JOIN t_user_login on t_st_detail.sid = t_user_login.id where name like "%"#{moHuName}"%";
+    </select>
+
+    <select id="getStudentListByMoHuMajor" resultType="Student">
+        select sid,name,sex,major,grade,sclass,acount,pwd from t_st_detail LEFT JOIN t_user_login on t_st_detail.sid = t_user_login.id where grade like "%"#{moHuMajor}"%";
+    </select>
+
+    <delete id="deleteStudentBySid">
+        delete from t_st_detail where sid = #{sid};
+    </delete>
+
+    <update id="updateStudentBySid">
+        update t_st_detail set name = #{name} , sex = #{sex} , major = #{major} , grade = #{grade} , sclass = #{sclass} where sid = #{sid};
+    </update>
+
+    <insert id="addStudent">
+        insert into t_st_detail values(#{sid},#{name},#{sex},#{major},#{grade},#{sclass});
+    </insert>
+</mapper>

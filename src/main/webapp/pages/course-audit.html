@@ -42,7 +42,7 @@
             elem: '#test'
             ,height: 550
             ,totalRow: true
-            ,url: 'http://localhost:8080/scproject/course.do?operate=dateOfAllNeedAuditCourse' //数据接口
+            ,url: '/scproject/course/dateOfAllNeedAuditCourse' //数据接口
             ,page: true //开启分页
             ,limit: 10
             ,limits: [5, 10, 20, 50, 100],
@@ -70,7 +70,8 @@
                     "data": result //解析数据列表
                 };
             }
-            ,cols: [[ //表头
+            ,cols: [
+                [ //表头
                 {field: 'cname', title: '课程名'}
                 ,{field: 'time', title: '上课时间', sort: true}
                 ,{field: 'address', title: '上课地点'}
@@ -78,7 +79,8 @@
                 ,{field: 'tid', title: '教师学工号'}
                 ,{field: 'cap', title: '容量', sort: true}
                 ,{fixed: 'right',title:'操作', toolbar: '#barDemo'}
-            ]]
+            ]
+            ]
             ,done: function() {
                 table.on('tool(test)', function(obj){ // 双击 toolDouble
                     var data = obj.data;
@@ -86,9 +88,8 @@
                         layer.confirm('是否否定此课程',{title:''}, function(index){
                             axios({
                                 method:"POST",
-                                url:"course.do",
+                                url:"/scproject/course/denyNeedAuditCourse",
                                 params:{
-                                    operate:'denyNeedAuditCourse',
                                     cname:obj.data.cname
                                 }
                             })
@@ -103,9 +104,8 @@
                         layer.confirm('是否通过此课程',{title:''}, function(index){
                             axios({
                                 method:"POST",
-                                url:"course.do",
+                                url:"/scproject/course/agreeNeedAuditCourse",
                                 params:{
-                                    operate:'agreeNeedAuditCourse',
                                     cname:obj.data.cname,
                                     time:obj.data.time,
                                     address:obj.data.address,

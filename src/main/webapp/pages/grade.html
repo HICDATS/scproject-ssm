@@ -36,7 +36,7 @@
 			table.render({
 				elem: '#scoreSum'
 				, height: 500
-				, url: 'http://localhost:8080/scproject/score.do?operate=getScore' //数据接口
+				, url: '/scproject/score/getScore' //数据接口
 				, page: true
 				,limit: 10
 				,limits: [5, 10, 20, 50, 100],
@@ -65,7 +65,8 @@
 					};
 				}
 				, toolbar: true
-				, cols: [[
+				, cols: [
+						[
 					{type: 'checkbox'}
 					, {field: 'cid', sort: true, title: '课程号'}
 					, {field: 'cname', title: '课程名'}
@@ -73,7 +74,8 @@
 					, {field: 'score', title: '期末成绩'}
 					, {field: 'tScore', title: '合计成绩'}
 
-				]]
+				]
+				]
 
 			});
 		})

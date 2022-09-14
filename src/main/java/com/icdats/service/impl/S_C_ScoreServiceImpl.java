@@ -4,16 +4,21 @@ import com.icdats.mapper.S_C_ScoreMapper;
 import com.icdats.pojo.AllScore;
 import com.icdats.pojo.Course;
 import com.icdats.pojo.S_C_Score;
+import com.icdats.service.CourseService;
 import com.icdats.service.S_C_ScoreService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
 public class S_C_ScoreServiceImpl implements S_C_ScoreService {
-
+    @Autowired
     private S_C_ScoreMapper s_C_ScoreMapper;
+    @Autowired
+    private CourseService courseService;
     @Override
     public List<S_C_Score> getCScoreBySid(Integer sid) {
         return s_C_ScoreMapper.getCScoreBySid(sid);
@@ -21,7 +26,13 @@ public class S_C_ScoreServiceImpl implements S_C_ScoreService {
 
     @Override
     public Map<Course, AllScore> getMapCScoreBySid(Integer sid) {
-        return s_C_ScoreMapper.getMapCScoreBySid(sid);
+        Map<Course,AllScore> mapSCList = new HashMap<>();
+        List<S_C_Score> listSC = getCScoreBySid(sid);
+        for (S_C_Score s_c_score : listSC) {
+            Course courseByCid = courseService.getCourseByCid(s_c_score.getCid());
+            mapSCList.put(courseByCid,new AllScore(s_c_score.getScore(), s_c_score.getUscore()));
+        }
+        return mapSCList;
     }
 
     @Override

@@ -8,4 +8,23 @@
         select * from t_user_login where acount = #{acount} and pwd = #{pwd};
     </select>
 
+    <insert id="addUser">
+        insert into t_user_login values (#{acount},#{pwd},#{role},#{id});
+    </insert>
+
+    <select id="getUserById" resultType="User">
+        select * from t_useer_login where id = #{id}
+    </select>
+
+    <update id="changePwdById">
+        update t_user_login set pwd = #{newPassword} where id = #{id};
+    </update>
+
+    <delete id="deleteUserById">
+        delete from t_user_login where id = #{id};
+    </delete>
+
+    <update id="updateUserById">
+        update t_user_login set acount = #{acount} and pwd = #{pwd} where id = #{id}
+    </update>
 </mapper>

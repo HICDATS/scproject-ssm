@@ -47,18 +47,20 @@
 		table.render({
 			elem: '#test'
 			, height: 550
-			,url:'http://localhost:8080/scproject/score.do?operate=getScoreFroTeacher'
+			,url:'/scproject/score/getScoreFroTeacher'
 			,toolbar: '#toolbarDemo'
 			,title: '学生数据表'
 			,totalRow: true
-			,cols: [[
+			,cols: [
+					[
 				{field:'sid', title: '学号', sort: true, fixed: 'left'}
 				,{field:'sname',  title: '姓名', fixed: 'left'}
 				,{field:'cname', title: '课程名', fixed: 'left'}
 				,{field:'uScore', title: '平时成绩',  event: 'setCity', sort: true, fixed: 'left'}
 				,{field:'score', title: '期末成绩', event: 'setSign', sort: true, fixed: 'left'}
 				,{field:'tScore', title: '总成绩',  sort: true, fixed: 'left'}
-			]]
+				]
+			]
 			,page: true
 			,limit: 10
 			,limits: [5, 10, 20, 50, 100],
@@ -113,15 +115,13 @@
 				this.elem.val(obj.title);
 				axios({
 					method:"POST",
-					url:"score.do",
+					url:"/scproject/score/selectDataScoreFroTeacher",
 					params:{
-						operate:'selectDataScoreFroTeacher',
 						value:zhi.value,
 						selectName:this.elem.val()
 					}
 				})
 				.then(function (value) {
-					// table.reload('test');
 					window.location.reload();
 				})
 				.catch(function (reason) { });
@@ -141,9 +141,8 @@
 					//选择修改后的操作
 					axios({
 						method:"POST",
-						url:"score.do",
+						url:"/scproject/score/changeScore",
 						params:{
-							operate:'changeScore',
 							sid:data.sid,
 							cname:data.cname,
 							newScoreStr:value
@@ -171,9 +170,8 @@
 					//选择修改后的操作
 					axios({
 						method:"POST",
-						url:"score.do",
+						url:"/scproject/score/changeUScore",
 						params:{
-							operate:'changeUScore',
 							sid:data.sid,
 							cname:data.cname,
 							newUScoreStr:value

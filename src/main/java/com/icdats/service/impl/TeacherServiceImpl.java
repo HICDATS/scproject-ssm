@@ -9,6 +9,7 @@ import com.icdats.service.S_C_ScoreService;
 import com.icdats.service.TeacherService;
 import com.icdats.service.UserService;
 import com.icdats.utils.TimeTableUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,9 +19,13 @@ import java.util.List;
 @Service
 public class TeacherServiceImpl implements TeacherService {
 
+    @Autowired
     private TeacherMapper teacherMapper;
+    @Autowired
     private CourseService courseService;
+    @Autowired
     private UserService userService;
+    @Autowired
     private S_C_ScoreService s_C_ScoreService;
 
     @Override

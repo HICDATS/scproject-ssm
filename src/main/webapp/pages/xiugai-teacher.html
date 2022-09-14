@@ -87,7 +87,7 @@
     });
 
     form.on('submit(demo1)', function(data){
-      $.post("http://localhost:8080/scproject/teacher.do?operate=updateTeacher", data.field,function (value){
+      $.post("/scproject/teacher/updateTeacher", data.field,function (value){
         layer.alert('修改成功', {icon: 1,title:" "});
       },"json");
       var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引

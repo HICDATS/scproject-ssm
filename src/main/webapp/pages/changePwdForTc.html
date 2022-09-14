@@ -77,9 +77,8 @@
             if (document.getElementById("id1").value === document.getElementById("id2").value) {
                 axios({
                     method: "POST",
-                    url: "user.do",
+                    url: "/scproject/user/changePasswordForTeacher",
                     params: {
-                        operate: 'changePasswordForTeacher',
                         oldPassword: data.field.oldpassword,
                         newPassword: data.field.newpassword1
                     }

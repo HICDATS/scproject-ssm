@@ -4,6 +4,8 @@ import com.icdats.mapper.CourseMapper;
 import com.icdats.pojo.Course;
 import com.icdats.service.CourseService;
 import com.icdats.service.S_C_ScoreService;
+import com.icdats.service.TeacherService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,27 +14,56 @@ import java.util.List;
 @Service
 public class CourseServiceImpl implements CourseService {
 
+    @Autowired
     private CourseMapper courseMapper;
+    @Autowired
     private S_C_ScoreService s_C_ScoreService;
+    @Autowired
+    private TeacherService teacherService;
 
     @Override
     public List<Course> getCourseByTid(Integer tid) {
-        return courseMapper.getCourseByTid(tid);
+        List<Course> courses = courseMapper.getCourseByTid(tid);
+        for (Course course : courses) {
+            course.setTimeArr(course.getTime().split("，"));
+        }
+        return courses;
     }
 
     @Override
     public Course getCourseByCid(Integer cid) {
-        return courseMapper.getCourseByCid(cid);
+        Course course = courseMapper.getCourseByCid(cid);
+        if(course==null){
+            return course;
+        }
+        Integer countOfCourse = s_C_ScoreService.getCountOfCourse(course.getCid());
+        course.setSnum(countOfCourse);
+        course.setTimeArr(course.getTime().split("，"));
+        return course;
     }
 
     @Override
     public List<Course> getAllCourse() {
-        return courseMapper.getAllCourse();
+        List<Course> courses = courseMapper.getAllCourse();
+        for (Course course : courses) {
+            String teacherName = teacherService.getTeacherName(course.getTid());
+            course.setTeachername(teacherName);
+            Integer countOfCourse = s_C_ScoreService.getCountOfCourse(course.getCid());
+            course.setSnum(countOfCourse);
+            course.setTimeArr(course.getTime().split("，"));
+        }
+        return courses;
     }
 
     @Override
     public Integer getCidByCname(String cname) {
-        return courseMapper.getCidByCname(cname);
+        Integer cid = courseMapper.getCidByCname(cname);
+        //当课程名不存在则返回-1
+        if(cid==null){
+            return -1;
+        }
+        //当课程名存在返回对应课程号
+        return cid;
     }
 
     @Override
@@ -65,6 +96,13 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Integer> getCidsByTidAndMoHuCname(String moHuCname) {
         List<Course> courses = courseMapper.getCoursesByTidAndMoHuCname(moHuCname);
+        for (Course course : courses) {
+            String teacherName = teacherService.getTeacherName(course.getTid());
+            course.setTeachername(teacherName);
+            Integer countOfCourse = s_C_ScoreService.getCountOfCourse(course.getCid());
+            course.setSnum(countOfCourse);
+            course.setTimeArr(course.getTime().split("，"));
+        }
         ArrayList<Integer> cids = new ArrayList<>();
         for (Course course : courses) {
             cids.add(course.getCid());
@@ -89,7 +127,15 @@ public class CourseServiceImpl implements CourseService {
             }
 
         }else{
-            return courseMapper.getCoursesByTidAndMoHuCname(value);
+            List<Course> courseList = courseMapper.getCoursesByTidAndMoHuCname(value);
+            for (Course course : courseList) {
+                String teacherName = teacherService.getTeacherName(course.getTid());
+                course.setTeachername(teacherName);
+                Integer countOfCourse = s_C_ScoreService.getCountOfCourse(course.getCid());
+                course.setSnum(countOfCourse);
+                course.setTimeArr(course.getTime().split("，"));
+            }
+            return courseList;
         }
     }
 

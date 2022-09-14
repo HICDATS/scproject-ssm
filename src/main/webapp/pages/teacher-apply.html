@@ -93,7 +93,7 @@
         });
 
         form.on('submit(demo1)', function (data) {
-            $.post("http://localhost:8080/scproject/teacher.do?operate=addTeacher", data.field, function (value) {
+            $.post("/scproject/teacher/addTeacher", data.field, function (value) {
                 var flag = value.add;
                 if (flag == true) {//若请求返回的exist信息为true说明申请的课程与已有的课程有时间地点冲突
                     layer.alert("添加成功", {icon: 1, title: ""}, function () {

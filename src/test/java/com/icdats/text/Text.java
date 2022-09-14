@@ -1,6 +1,8 @@
 package com.icdats.text;
 
+import com.icdats.mapper.CourseMapper;
 import com.icdats.pojo.User;
+import com.icdats.service.CourseService;
 import com.icdats.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,10 +14,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration("classpath:spring.xml")
 public class Text {
     @Autowired
-    private UserService userService;
+    private CourseMapper courseMapper;
     @Test
     public void text(){
-        User t0001 = userService.login("t0001", "123456");
-        System.out.println(t0001);
+        Integer hao = courseMapper.getCidByCname("hao");
+        System.out.println(hao);
     }
 }

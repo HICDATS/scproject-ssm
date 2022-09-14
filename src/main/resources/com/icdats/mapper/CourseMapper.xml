@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.icdats.mapper.CourseMapper">
+    <select id="getCourseByTid" resultType="Course">
+        select * from t_course_detail where tid = #{tid};
+    </select>
+
+    <select id="getCourseByCid" resultType="Course">
+        select * from t_course_detail where cid = #{cid};
+    </select>
+
+    <select id="getAllCourse" resultType="Course">
+        select * from t_course_detail;
+    </select>
+
+    <select id="getCidByCname" resultType="Integer">
+        select cid from t_course_detail where cname = #{cname};
+    </select>
+
+    <select id="getNeedAuditCourseByTid" resultType="Course">
+        select * from t_course_audit where tid = #{tid};
+    </select>
+
+    <delete id="deleteNeedAuditCourseByCname">
+        delete from t_course_audit where cname = #{cname};
+    </delete>
+
+    <insert id="addNeedAuditCourse">
+        insert into t_course_audit values(null,#{cname},#{time},#{address},#{cap},#{tid});
+    </insert>
+
+    <select id="getCourseByAddressAndTime" resultType="Course">
+        select * from t_course_detail where address = #{address} and time = #{time};
+    </select>
+
+    <delete id="deleteCourseByCname">
+        delete from t_course_detail where cname = #{cname};
+    </delete>
+
+    <select id="getCoursesByTidAndMoHuCname" resultType="Course">
+        select * from t_course_detail where cname like "%"#{moHuCname}"%";
+    </select>
+
+    <select id="getAllNeedAuditCourse" resultType="Course">
+        select * from t_course_audit;
+    </select>
+
+    <insert id="addCourse">
+        insert into t_course_detail values(null,#{cname},#{time},#{address},#{cap},#{tid});
+    </insert>
+
+
+</mapper>

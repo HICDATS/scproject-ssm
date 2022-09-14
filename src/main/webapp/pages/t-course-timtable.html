@@ -26,7 +26,7 @@
 
 			</div>
 			<table class="layui-table"
-				   lay-data="{ url:'http://localhost:8080/scproject/course.do?operate=getTimeTableForTeacher', id:'scoreSum'}"
+				   lay-data="{ url:'/scproject/course/getTimeTableForTeacher', id:'scoreSum'}"
 				   lay-filter="demo">
 				<thead>
 					<tr>
@@ -42,7 +42,6 @@
 				</thead>
 			</table>
 		</div>
-				<!--注：本界面所有成绩为计算后的成绩,习题按照16次计算|测验按3次计算|考试成绩按一次计算,未录入成绩的按照0分计算,总成绩计算方式（平时占比40%,期末考试占比60%）-->
 		<hr></hr>
 		<h5 style="text-align: center;">课表查询</h5>
 	</div>
@@ -56,9 +55,8 @@
 				if(obj.event === 'setSign1'){
 					axios({
 						method:"POST",
-						url:"student.do",
+						url:"/scproject/student/getStudentsBycname",
 						params:{
-							operate:'getStudentsBycname',
 							cname:data.timeMonday
 						}
 					})
@@ -76,9 +74,8 @@
 				else if(obj.event === 'setSign2'){
 					axios({
 						method:"POST",
-						url:"student.do",
+						url:"/scproject/student/getStudentsBycname",
 						params:{
-							operate:'getStudentsBycname',
 							cname:data.timeTuesday
 						}
 					})
@@ -96,9 +93,8 @@
 				else if(obj.event === 'setSign3'){
 					axios({
 						method:"POST",
-						url:"student.do",
+						url:"/scproject/student/getStudentsBycname",
 						params:{
-							operate:'getStudentsBycname',
 							cname:data.timeWednesday
 						}
 					})
@@ -116,9 +112,8 @@
 				else if(obj.event === 'setSign4'){
 					axios({
 						method:"POST",
-						url:"student.do",
+						url:"/scproject/student/getStudentsBycname",
 						params:{
-							operate:'getStudentsBycname',
 							cname:data.timeThursday
 						}
 					})
@@ -136,9 +131,8 @@
 				else if(obj.event === 'setSign5'){
 					axios({
 						method:"POST",
-						url:"student.do",
+						url:"/scproject/student/getStudentsBycname",
 						params:{
-							operate:'getStudentsBycname',
 							cname:data.timeFriday
 						}
 					})
@@ -156,9 +150,8 @@
 				else if(obj.event === 'setSign6'){
 					axios({
 						method:"POST",
-						url:"student.do",
+						url:"/scproject/student/getStudentsBycname",
 						params:{
-							operate:'getStudentsBycname',
 							cname:data.timeSaturday
 						}
 					})
@@ -176,9 +169,8 @@
 				else {
 					axios({
 						method:"POST",
-						url:"student.do",
+						url:"/scproject/student/getStudentsBycname",
 						params:{
-							operate:'getStudentsBycname',
 							cname:data.timeSunday
 						}
 					})

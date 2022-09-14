@@ -7,6 +7,7 @@ import com.icdats.service.S_C_ScoreService;
 import com.icdats.service.StudentService;
 import com.icdats.service.UserService;
 import com.icdats.utils.TimeTableUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,10 +17,13 @@ import java.util.Set;
 
 @Service
 public class StudentServiceImpl implements StudentService {
-
+    @Autowired
     private StudentMapper studentMapper;
+    @Autowired
     private S_C_ScoreService s_C_ScoreService;
+    @Autowired
     private CourseService courseService;
+    @Autowired
     private UserService userService;
 
     @Override
@@ -37,8 +41,12 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<Student> getStudentListByCname(String cname) {
         Integer cidByCname = courseService.getCidByCname(cname);
-        List<S_C_Score> selectedS_c_score = s_C_ScoreService.getSelectedS_C_Score(cidByCname);
-        List<Student> students = studentMapper.getStudentListByS_C_ScoreList(selectedS_c_score);
+        List<S_C_Score> list = s_C_ScoreService.getSelectedS_C_Score(cidByCname);
+        ArrayList<Student> students = new ArrayList<>();
+        for (S_C_Score s_c_score : list) {
+            Student studentBySid = getStudentBySid(s_c_score.getSid());
+            students.add(studentBySid);
+        }
         return students;
     }
 

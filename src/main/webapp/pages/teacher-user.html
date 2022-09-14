@@ -46,7 +46,7 @@
             elem: '#test'
             ,title:'hahah'
             ,height: 550
-            ,url: 'http://localhost:8080/scproject/teacher.do?operate=dataOfTeacherBySelected' //数据接口
+            ,url: '/scproject/teacher/dataOfTeacherBySelected' //数据接口
             ,page: true //开启分页
             ,limit: 10
             ,limits: [5, 10, 20, 50, 100],
@@ -72,7 +72,8 @@
                 };
             }
             ,toolbar:'#toolbarDemo'
-            ,cols: [[ //表头
+            ,cols: [
+                [ //表头
                 {field: 'acount', title: '账号', sort:true,width:100,  fixed: 'left'}
                 ,{field: 'name', title: '姓名',  fixed: 'left'}
                 ,{field: 'sex', title: '性别', fixed: 'left'}
@@ -81,7 +82,8 @@
                 ,{field: 'jobTitle', title: '职称', fixed: 'left'}
                 ,{field: 'pwd', title: '密码', fixed: 'left'}
                 ,{title:'操作', toolbar: '#barDemo', fixed: 'left'}
-            ]]
+            ]
+            ]
             ,done: function() {
                 //var id = this.id;
                 table.on('tool(test)', function(obj){ // 双击 toolDouble
@@ -123,21 +125,18 @@
                                 //点击确认后的操作
                                 axios({
                                     method:"POST",
-                                    url:"teacher.do",
+                                    url:"/scproject/teacher/deleteTeacher",
                                     params:{
-                                        operate:'deleteTeacher',
                                         tid:obj.data.tid
                                     }
                                 })
                                     .then(function (value) {
                                         layer.alert('删除成功', {icon: 1,title:" "});
-                                        // table.reload('test');
                                         window.location.reload();
                                     })
                                     .catch(function (reason) {  });
                                 layer.close(index);},
                             btn2: function (index, layero) {
-                                // 取消后的操作
                                 layer.close(index);
                             }
 
@@ -172,15 +171,13 @@
                 this.elem.val(obj.title);
                 axios({
                     method:"POST",
-                    url:"teacher.do",
+                    url:"/scproject/teacher/selectTeacherDetail",
                     params:{
-                        operate:'selectTeacherDetail',
                         value:zhi.value,
                         selectName:this.elem.val()
                     }
                 })
                     .then(function (value) {
-                        // table.reload('test');
                         window.location.reload();
                     })
                     .catch(function (reason) { });

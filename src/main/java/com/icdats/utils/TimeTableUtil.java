@@ -2,11 +2,11 @@ package com.icdats.utils;
 
 import com.icdats.pojo.Course;
 import com.icdats.pojo.TimeTable;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
 public class TimeTableUtil {
     public static List<TimeTable> getTimeTableListByCourses(Set<Course> courses){
         List<TimeTable> timeTables = new ArrayList<>();

@@ -51,16 +51,14 @@
 				var form = layui.form;
 				var layer = layui.layer;
 				form.on('submit(login)', function(data) {
-					alert("hello")
-					$.post("/scproject/login", data.field, function (value) {
+					$.post("/scproject/user/login", data.field, function (value) {
 						var login = value.login;
-						alert(login)
 						if (login == "student") {//若请求返回的exist信息为true说明申请的课程与已有的课程有时间地点冲突
-							self.location="/scproject/page.do?operate=page&page=student-index";
+							self.location="/scproject/page/student-index";
 						} else if(login == "teacher"){
-							self.location="/scproject/page.do?operate=page&page=teacher-index";
+							self.location="/scproject/page/teacher-index";
 						} else if(login == "root"){
-							self.location="/scproject/page.do?operate=page&page=admin";
+							self.location="/scproject/page/admin";
 						} else {
 							layer.alert('账号或密码不正确', {icon: 2,title:" "});
 						}

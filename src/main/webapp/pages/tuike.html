@@ -32,14 +32,14 @@
   layui.use('table', function(){
     var table = layui.table;
 
-    //第一个实例
     table.render({
       elem: '#test'
       ,height: 500
-      ,url: 'http://localhost:8080/scproject/course.do?operate=getSelectedCourse' //数据接口
+      ,url: '/scproject/course/getSelectedCourse' //数据接口
       //,page: true //开启分页
 
-      ,cols: [[ //表头
+      ,cols: [
+              [ //表头
 
         {field: 'cid', title: '课程号', width:100, sort: true}
         ,{field: 'cname', title: '课程名', width:170}
@@ -50,12 +50,11 @@
         ,{field: 'snum', title: '已选人数',width:120,sort: true}
         ,{fixed: 'right',title:'操作', toolbar: '#barDemo'}
 
-      ]]
+      ]
+      ]
       ,done: function() {
-        //var id = this.id;
         table.on('tool(test)', function(obj){ // 双击 toolDouble
           var data = obj.data;
-          //console.log(obj)
             if(obj.event === 'del'){
             //写函数，传递数据
             layer.open({
@@ -68,9 +67,8 @@
                 //点击确认后的操作，向courseController放送请求
                 axios({
                   method:"POST",
-                  url:"course.do",
+                  url:"/scproject/course/deleteCourse",
                   params:{
-                    operate:'deleteCourse',
                     cid:obj.data.cid
                   }
                 })

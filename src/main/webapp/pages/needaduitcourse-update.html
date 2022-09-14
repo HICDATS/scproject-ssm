@@ -261,23 +261,11 @@
             }]
           },
         ]
-        // ,ready: function(elemPanel, elem){
-        //   console.log(elemPanel);
-        //   //console.log(elem);
-        // }
+
          ,click: function(data,item){
-          // if($("time").val() === null)
-          // {
-          //   x = "";
-          // }
           this.elem.val(x + data.title+'，');
           x += data.title+'，';
           console.log(this.elem.val());
-
-          // console.log(item.);
-          //console.log(data);
-
-          //console.log(this.elem);
         }
         ,style: 'width: 235px;'
       });
@@ -757,7 +745,7 @@
       })
 
       form.on('submit(demo1)', function(data){
-        $.post("http://localhost:8080/scproject/course.do?operate=applyCourse", data.field,function (value){
+        $.post("/scproject/course/applyCourse", data.field,function (value){
           var flag = value.exist;
           if(flag == true){//若请求返回的exist信息为true说明申请的课程与已有的课程有时间地点冲突
             layer.alert('该申请课程与已有课程时间冲突', {icon: 2,title:" "});

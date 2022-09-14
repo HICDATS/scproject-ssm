@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.icdats.mapper.S_C_ScoreMapper">
+    <select id="getCScoreBySid" resultType="S_C_Score">
+        select * from t_scs_detail where sid =#{sid};
+    </select>
+
+    <insert id="addCScore">
+        insert into t_scs_detail(sid,cid) values( #{sid} , #{cid} );
+    </insert>
+
+    <select id="getCountOfCourse" resultType="Integer">
+        select count(*) from t_scs_detail where cid = #{cid};
+    </select>
+
+    <delete id="deleteCScoreBySidAndCid">
+        delete from t_scs_detail where sid = #{sid} and cid = #{cid};
+    </delete>
+
+    <select id="getSelectedS_C_Score" resultType="S_C_Score">
+        select sid from t_scs_detail where cid = #{cid}
+    </select>
+    
+    <select id="getS_C_ScoreBySidAndCid" resultType="S_C_Score">
+        select * from t_scs_detail where sid = #{sid} and cid = #{cid};
+    </select>
+
+    <update id="changeScore">
+        update t_scs_detail set score = #{newScore} where sid = #{sid} and cid = #{cid};
+    </update>
+
+    <update id="changeUScore">
+        update t_scs_detail set uscore = #{newScore} where sid = #{sid} and cid = #{cid};
+    </update>
+
+    <delete id="deleteS_C_ScoreByCname">
+        delete from t_scs_detail where cid = #{cid};
+    </delete>
+
+    <delete id="deleteS_C_ScoreBySid">
+        delete from t_scs_detail where sid = #{sid};
+    </delete>
+</mapper>

@@ -1,5 +1,6 @@
 package com.icdats.controller;
 
+import com.icdats.json.ToJson;
 import com.icdats.pojo.*;
 import com.icdats.service.StudentService;
 import com.icdats.service.TeacherService;
@@ -10,10 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
+import java.util.*;
+@SuppressWarnings("all")
+@RequestMapping("/user")
 @Controller
 public class UserController {
     @Autowired
@@ -56,58 +56,54 @@ public class UserController {
         }
     }
 
-    //用于判断用户输入的账号密码是否正确
-    public String showErro(HttpSession session) {
-        Boolean showErro = (Boolean) session.getAttribute("showErro");
-        if (showErro == null || showErro == false) {//尝试获取提示信息，若提示信息存在，则返回信息，用于页面显示提示信息
-            return "json:{\"showErroFlag\":false}";
-        } else {
-            session.setAttribute("showErro",false);
-            return "json:{\"showErroFlag\":true}";
-        }
+    @ResponseBody
+    @RequestMapping("/text")
+    public ToJson textData(HttpSession session) {
+        Student currStudent = (Student)session.getAttribute("currStudent");
+        Map<Course, AllScore> coursesMap = currStudent.getCourses();
+        Set<Course> courses = coursesMap.keySet();
+        ToJson toJson = new ToJson();
+        toJson.setCount(courses.size());
+        toJson.setData(Arrays.asList(courses.toArray()));
+        return toJson;
     }
 
-//    public String textData(HttpSession session) {
-//        String before = "json:{\"code\":0,\"msg\":\"\",\"count\":";
-//        Gson gson = new Gson();
-//        Student currStudent = (Student)session.getAttribute("currStudent");
-//        Map<Course, AllScore> coursesMap = currStudent.getCourses();
-//        Set<Course> courses = coursesMap.keySet();
-//        before += courses.size() + ",\"data\":[";
-//        for (Course course : courses) {
-//            String c = gson.toJson(course);
-//            before+=c+",";
-//        }
-//        return before.substring(0,before.length()-1) + "]}";
-//    }
-//
-//    //用于学生用户修改密码
-//    public String changePasswordForStudent(String oldPassword,String newPassword,HttpSession session){
-//        Student currStudent = (Student) session.getAttribute("currStudent");
-//        Integer sid = currStudent.getSid();
-//        User currUser = userService.getUserById(sid);
-//        if(!currUser.getPwd().equals(oldPassword)){
-//            return "json:{\"pwdIsRight\":false}";
-//        }
-//        userService.changePwdById(sid,newPassword);
-//        return "json:{\"pwdIsRight\":true}";
-//    }
-//
-//    //用于教师用户修改密码
-//    public String changePasswordForTeacher(String oldPassword,String newPassword,HttpSession session){
-//        //获取当前用户的实体对象
-//        Teacher teacher = (Teacher) session.getAttribute("currTeacher");
-//        //获取当前教师的学工号
-//        Integer tid = teacher.getTid();
-//        User currUser = userService.getUserById(tid);
-//        //判断所填写的原密码是否和数据库中的密码相符合
-//        if(!currUser.getPwd().equals(oldPassword)){
-//            return "json:{\"pwdIsRight\":false}";
-//        }
-//        //所填写的原密码是否和数据库中的密码相符合,进行修改密码
-//        userService.changePwdById(tid,newPassword);
-//        return "json:{\"pwdIsRight\":true}";
-//    }
+    //用于学生用户修改密码
+    @ResponseBody
+    @RequestMapping("/changePasswordForStudent")
+    public Map<String, Boolean> changePasswordForStudent(String oldPassword,String newPassword,HttpSession session){
+        HashMap<String, Boolean> result = new HashMap<>();
+        Student currStudent = (Student) session.getAttribute("currStudent");
+        Integer sid = currStudent.getSid();
+        User currUser = userService.getUserById(sid);
+        if(!currUser.getPwd().equals(oldPassword)){
+            result.put("pwdIsRight",false);
+            return result;
+        }
+        userService.changePwdById(sid,newPassword);
+        result.put("pwdIsRight",true);
+        return result;
+    }
 
+    @ResponseBody
+    @RequestMapping("/changePasswordForTeacher")
+    //用于教师用户修改密码
+    public Map<String, Boolean> changePasswordForTeacher(String oldPassword,String newPassword,HttpSession session){
+        HashMap<String, Boolean> result = new HashMap<>();
+        //获取当前用户的实体对象
+        Teacher teacher = (Teacher) session.getAttribute("currTeacher");
+        //获取当前教师的学工号
+        Integer tid = teacher.getTid();
+        User currUser = userService.getUserById(tid);
+        //判断所填写的原密码是否和数据库中的密码相符合
+        if(!currUser.getPwd().equals(oldPassword)){
+            result.put("pwdIsRight",false);
+            return result;
+        }
+        //所填写的原密码是否和数据库中的密码相符合,进行修改密码
+        userService.changePwdById(tid,newPassword);
+        result.put("pwdIsRight",true);
+        return result;
+    }
 
 }
